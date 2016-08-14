@@ -247,11 +247,26 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
-    for (var i = 1; i < arguments.length; i++) {
+    //  Solution rewritten to include the use of _.each
+    //  Original solution kept in the below comment
+    //  as a reference
+
+    /*for (var i = 1; i < arguments.length; i++) {
       for (var key in arguments[i]) {
         obj[key] = arguments[i][key];
       }
+    }*/
+
+    var args = [];
+    for (var i = 1; i < arguments.length; i++) {
+      args.push(arguments[i]);
     }
+
+    _.each(args, function(item) {
+      _.each(item, function(value, key) {
+        obj[key] = value;
+      });
+    });
 
     return obj;
   };
@@ -259,13 +274,30 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-    for (var i = 1; i < arguments.length; i++) {
+    //  Solution rewritten to include the use of _.each
+    //  Original solution kept in the below comment
+    //  as a reference
+
+    /*for (var i = 1; i < arguments.length; i++) {
       for (var key in arguments[i]) {
         if (obj[key] === undefined) {
           obj[key] = arguments[i][key];
         }
       }
+    }*/
+
+    var args = [];
+    for (var i = 1; i < arguments.length; i++) {
+      args.push(arguments[i]);
     }
+
+    _.each(args, function(item) {
+      _.each(item, function(value, key) {
+        if (obj[key] === undefined) {
+          obj[key] = value;
+        }
+      });
+    });
 
     return obj;
   };
