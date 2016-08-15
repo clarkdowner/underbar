@@ -343,6 +343,17 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+
+    var storage = {};
+    var result;
+
+    return function(args) {
+      if (!(args in storage)) {
+        storage[args] = func.apply(this, arguments);
+        result = storage[args];
+      }
+      return storage[args];
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
