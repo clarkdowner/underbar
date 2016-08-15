@@ -366,9 +366,6 @@
 
     var args = Array.prototype.slice.call(arguments, 2);
 
-    console.log(arguments);
-    console.log(args);
-
     if (args.length > 0) {
       return setTimeout(func.apply(this, args), wait);
     } else {
@@ -388,6 +385,20 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var returnArray = [];
+    var arrayCopy = Array.prototype.slice.call(array);
+    var arrayLength = arrayCopy.length;
+
+    while (arrayLength > 0) {
+      var pick = Math.floor(( Math.random() * arrayLength ));
+
+      returnArray.push(arrayCopy[pick]);
+      arrayCopy.splice(pick, 1);
+
+      arrayLength--;
+    }
+
+    return returnArray;
   };
 
 
